@@ -9,13 +9,19 @@ class DoubleLinkedList:
 
 
     def addDataNext(self, data):
+        new_node = Node(data)
         if self.pivot == None:
-            self.pivot = Node(data)
+            self.pivot = new_node
+        else:
+            new_node.next = self.pivot
+            self.pivot.previous = new_node
+            self.pivot = new_node
 
 
     def addDataPrevious(self, data):
+        new_node = Node(data)
         if self.pivot == None:
-            self.pivot = Node(data)
+            self.pivot = new_node
 
 
     def showAllDataNext(self):
@@ -29,7 +35,5 @@ class DoubleLinkedList:
     def showAllDataPrevious(self):
         self._showAllDataPrevious(self.pivot)
     def _showAllDataPrevious(self, pivot):
-        if pivot != None:
-            print(pivot.data)
-            self._showAllDataNext(pivot.previous)
+        pass
 
