@@ -12,7 +12,6 @@ list.addDataNext(2)
 list.addDataNext(3)
 list.addDataNext(4)
 list.addDataNext(5)
-
 list.showAllDataNext()
 print("=================")
 list.showAllDataPrevious()

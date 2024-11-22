@@ -17,6 +17,7 @@ class DoubleLinkedList:
     def _addDataNext(self, pivot, new_node):
         if pivot.next == None:
             pivot.next = new_node
+            new_node.previous = pivot
         else:
             self._addDataNext(pivot.next, new_node)
 
@@ -30,6 +31,7 @@ class DoubleLinkedList:
     def _addDataPrevious(self, pivot, new_node):
         if pivot.previous == None:
             pivot.previous = new_node
+            new_node.next = pivot
         else:
             self._addDataPrevious(pivot.previous, new_node)
 
