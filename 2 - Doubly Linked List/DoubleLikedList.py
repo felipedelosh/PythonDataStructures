@@ -36,10 +36,6 @@ class DoubleLinkedList:
         if self.pivot == None:
             return 0
         
-        return self.countItemsToPrevousMode() + self.countItemsToNextMode() - 1 # Decrement becos the pivot count two times
-        
-
-    def countItemsToNextMode(self):
         if self.pivot != None:
             _count = 1
             _copy = self.pivot.next
@@ -53,32 +49,70 @@ class DoubleLinkedList:
         return 0
     
 
-    def countItemsToPrevousMode(self):
-        if self.pivot != None:
-            _count = 1
-            _copy = self.pivot.previous
+    def updateValue(self, index, data):
+        _count = self.count()
 
-            while _copy != None:
-                _count = _count + 1
-                _copy = _copy.previous
+        if index >= 0 and index < _count:
+            _copy = self.pivot
+            _counter = 0
+            while _counter < index:
+                _copy = _copy.next
+                _counter = _counter + 1
 
-            return _count
+            # UPDATE
+            _copy.data =  data
 
-        return 0
 
+    def isDataInList(self, data):
+        if self.pivot == None:
+            return False
+        
+        _copy = self.pivot
+        while _copy != None:
+            if _copy.data == data:
+                return True
+            
+            _copy = _copy.next
+
+        return False
+    
+
+    def deleteData(self, data):
+        if self.pivot is not None:
+            # Case 01: is head
+            if self.pivot.data == data:
+                self.pivot = self.pivot.next
+                if self.pivot is not None:
+                    self.pivot.previous = None
+            # Case 02: Element it's not in head
+            else:
+                _copy = self.pivot
+
+                while _copy.next is not None:
+                    if _copy.next.data == data:
+                        break
+                    _copy = _copy.next
+
+                # Delete
+                if _copy.next is not None and _copy.next.data == data:
+                    node_to_delete = _copy.next
+                    _copy.next = node_to_delete.next
+
+                    # Validate if it's not the last element
+                    if node_to_delete.next is not None:
+                        node_to_delete.next.previous = _copy
+                    node_to_delete = None
+
+
+
+        
 
     def showAllData(self):
         if self.pivot != None:
-            print(f"Pivote: {self.pivot.data}")
+            print(self.pivot.data)
 
             _cpyN = self.pivot.next
-            _cpyP = self.pivot.previous
 
             while _cpyN != None:
-                print(f"NEXT: {_cpyN.data}")
+                print(_cpyN.data)
                 _cpyN = _cpyN.next
-
-            while _cpyP != None:
-                print(f"Previous: {_cpyP.data}")
-                _cpyP = _cpyP.previous
-
