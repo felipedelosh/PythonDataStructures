@@ -29,8 +29,8 @@ class DoubleLinkedList:
                 _copy = _copy.next
 
             _copy.next = new_node
-            new_node = _copy
-            
+            new_node.previous = _copy
+
 
     def showAllData(self):
         if self.pivot != None:
