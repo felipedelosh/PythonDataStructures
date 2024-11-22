@@ -7,11 +7,16 @@ from DoubleLikedList import DoubleLinkedList
 
 list = DoubleLinkedList()
 
-list.addDataNext(1)
-list.addDataNext(2)
-list.addDataNext(3)
-list.addDataNext(4)
-list.addDataNext(5)
+#list.addDataNextUpdatingPivot(1)
+list.addDataPreviousUpdatingPivot(6)
+#list.addDataNextUpdatingPivot(2)
+list.addDataPreviousUpdatingPivot(7)
+#list.addDataNextUpdatingPivot(3)
+list.addDataPreviousUpdatingPivot(8)
+#list.addDataNextUpdatingPivot(4)
+list.addDataPreviousUpdatingPivot(9)
+#list.addDataNextUpdatingPivot(5)
+
 list.showAllDataNext()
 print("=================")
 list.showAllDataPrevious()

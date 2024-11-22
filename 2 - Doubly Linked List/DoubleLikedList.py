@@ -22,6 +22,31 @@ class DoubleLinkedList:
             self._addDataNext(pivot.next, new_node)
 
 
+    def addDataNextUpdatingPivot(self, data):
+        new_node = Node(data)
+        if self.pivot == None:
+            self.pivot = new_node
+        else:
+            _copy = self.pivot
+
+            while _copy.next != None:
+                _copy = _copy.next
+
+            _copy.next = new_node
+            new_node.previous = _copy
+            self.pivot = new_node
+
+
+    def addDataPreviousUpdatingPivot(self, data):
+        new_node = Node(data)
+        if self.pivot == None:
+            self.pivot = new_node
+        else:
+            new_node.next = self.pivot
+            self.pivot.previous = new_node
+            self.pivot = new_node
+
+
     def addDataPrevious(self, data):
         new_node = Node(data)
         if self.pivot == None:

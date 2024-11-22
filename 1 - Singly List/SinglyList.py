@@ -7,8 +7,23 @@ class SinglyList:
     def __init__(self) -> None:
         self.pivot = None
 
-
+    
     def addData(self, data):
+        new_node = Node(data)
+        if self.pivot == None:
+            self.pivot = new_node
+        else:
+            _copy = self.pivot
+            while _copy.next != None:
+                _copy = _copy.next
+
+            _copy.next = new_node
+
+
+    def addDataModeRecursive(self, data):
+        """
+        WARNING: if the list it's too long causes STACK OVERFLOW
+        """
         if self.pivot == None:
             self.pivot = Node(data)
         else:
@@ -33,6 +48,22 @@ class SinglyList:
     def count(self):
         if self.pivot == None:
             return 0
+
+        _copy = self.pivot
+        _counter = 1
+        while _copy.next != None:
+            _counter = _counter + 1
+            _copy = _copy.next
+
+        return _counter
+    
+
+    def countModeRecursive(self):
+        """
+        WARNING: if the list it's too long causes STACK OVERFLOW
+        """
+        if self.pivot == None:
+            return 0
         return self._count(self.pivot)
     def _count(self, pivot):
         if pivot == None:
@@ -40,7 +71,29 @@ class SinglyList:
         else:
             return 1 + self._count(pivot.next)
         
+
     def isDataInList(self, data):
+        if self.pivot == None:
+            return False
+        
+        if self.pivot.data == data:
+            return True
+        
+        _copy = self.pivot
+        while _copy.next != None:
+
+            if _copy.data == data:
+                return True
+
+            _copy = _copy.next
+
+        return False     
+
+        
+    def isDataInListRecursive(self, data):
+        """
+        WARNING: if the list it's too long causes STACK OVERFLOW
+        """
         return self._isDataInList(self.pivot, data)
     def _isDataInList(self, pivot, data):
         if pivot != None:
@@ -51,6 +104,7 @@ class SinglyList:
         else:
             return False
         
+
     def updateValue(self, index, data):
         _count = self.count()
 
@@ -64,12 +118,13 @@ class SinglyList:
             # UPDATE
             _copy.data =  data
 
+
     def deleteValue(self, data):
         if self.pivot != None:
             # Case 01: is head
             if self.pivot.data == data:
                 self.pivot = self.pivot.next
-            # Case 02: Other element diferent to head
+            # Case 02: Element it's not in head
             else:
                 _copy = self.pivot
 
@@ -81,6 +136,7 @@ class SinglyList:
                 # Delete
                 if _copy.next != None  and _copy.next.data == data:
                     _copy.next = _copy.next.next
+
 
     def getValue(self, index):
         _count = self.count()
