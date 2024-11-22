@@ -13,7 +13,7 @@ In this repository, you'll find a comprehensive collection of fundamental and ad
 ## :hammer:Funtions:
 
 - `Function 1`: Singly Linked List<br>
-- `Function 2`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
+- `Function 2`: Doubly Linked List<br>
 - `Function 3`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 - `Function 3a`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 - `Function 4`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
