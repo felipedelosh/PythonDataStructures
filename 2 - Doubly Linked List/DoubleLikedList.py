@@ -32,6 +32,41 @@ class DoubleLinkedList:
             new_node.previous = _copy
 
 
+    def count(self):
+        if self.pivot == None:
+            return 0
+        
+        return self.countItemsToPrevousMode() + self.countItemsToNextMode() - 1 # Decrement becos the pivot count two times
+        
+
+    def countItemsToNextMode(self):
+        if self.pivot != None:
+            _count = 1
+            _copy = self.pivot.next
+
+            while _copy != None:
+                _count = _count + 1
+                _copy = _copy.next
+
+            return _count
+
+        return 0
+    
+
+    def countItemsToPrevousMode(self):
+        if self.pivot != None:
+            _count = 1
+            _copy = self.pivot.previous
+
+            while _copy != None:
+                _count = _count + 1
+                _copy = _copy.previous
+
+            return _count
+
+        return 0
+
+
     def showAllData(self):
         if self.pivot != None:
             print(f"Pivote: {self.pivot.data}")

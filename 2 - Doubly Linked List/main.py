@@ -14,3 +14,4 @@ list.addDataEnd(5)
 list.addDataStart(1)
 
 list.showAllData()
+print(f"Total elements: {list.count()}")
