@@ -23,6 +23,20 @@ class CircularLinkedList:
             new_node.next = self.pivot
 
 
+    def getData(self, index):
+        if self.pivot == None:
+            return None
+        
+        _copy = self.pivot
+        _counter = 0
+        while _counter < index:
+            _copy = _copy.next
+            _counter = _counter + 1
+
+        return _copy.data
+    
+
+
     def isDataInList(self, data):
         if self.pivot == None:
             return False
@@ -44,11 +58,9 @@ class CircularLinkedList:
         if index >= 0 and index < _count:
             _copy = self.pivot
             _counter = 0
-            while _copy.next != self.pivot:
-                if _copy.data == data:
-                    return True
-
+            while _counter < index:
                 _copy = _copy.next
+                _counter = _counter + 1
 
             # UPDATE
             _copy.data =  data
@@ -104,3 +116,6 @@ class CircularLinkedList:
 
                 if _copy == self.pivot:
                     break
+
+    def isEmpty(self):
+        return self.pivot == None
