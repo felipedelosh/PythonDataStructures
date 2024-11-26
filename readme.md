@@ -16,7 +16,7 @@ In this repository, you'll find a comprehensive collection of fundamental and ad
 - `Function 2`: Doubly Linked List<br>
 - `Function 3`: Circular Linked List<br>
 - `Function 4.1`: Queue<br>
-- `Function 5`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
+- `Function 4.2`: Stack<br>
 - `Function 6`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 - `Function 7`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 - `Function 8`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
