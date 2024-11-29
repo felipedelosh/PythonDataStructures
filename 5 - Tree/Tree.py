@@ -51,3 +51,12 @@ class Tree:
             print(pivot.data)
             self._viewPreOrder(pivot.left)
             self._viewPreOrder(pivot.right)
+
+
+    def count(self):
+        return self._count(self.root)
+    def _count(self, pivot):
+        if pivot == None:
+            return 0
+        else:
+            return 1 + self._count(pivot.left) + self._count(pivot.right)

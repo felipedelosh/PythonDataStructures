@@ -13,7 +13,7 @@ tree.insert(1)
 tree.insert(7)
 tree.insert(6)
 
-
+print(f"TOTAL nodes: {tree.count()}")
 print("======== VIEW IN-ORDER =========")
 tree.viewInOrder()
 print("======== VIEW PRE-ORDER =========")
