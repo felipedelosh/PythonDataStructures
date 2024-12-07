@@ -53,6 +53,21 @@ class Tree:
             self._viewPreOrder(pivot.right)
 
 
+    def searchByData(self, data):
+        return self._searchByData(self.root, data) 
+    def _searchByData(self, pivot,data):
+        if pivot != None:
+            if pivot.data == data:
+                return pivot
+            else:
+                if pivot.data < data:
+                    return self._searchByData(pivot.right, data)
+                else:
+                    return self._searchByData(pivot.left, data)
+
+        return None
+
+
     def count(self):
         return self._count(self.root)
     def _count(self, pivot):
