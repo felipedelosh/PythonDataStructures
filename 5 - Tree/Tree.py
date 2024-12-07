@@ -25,6 +25,68 @@ class Tree:
             else:
                 self._insert(pivot.left, data)
 
+
+    def delNodeByData(self, data):
+        # Case 0 del a root
+        if self.root.data == data:
+            if self.isTheNodeALeaf(self.root):
+                self.root = None
+            else:
+                pass
+        else:
+            self._delNodeByData(self.root, data)
+    def _delNodeByData(self, pivot, data):
+        if pivot != None:
+            _findL = False
+            _findR = False
+            _direction = ""
+
+            if pivot.left != None:
+                if pivot.left.data == data:
+                    _findL = True
+                    _direction = "L"
+                    print(f"Find child, Father >>{pivot.data}")
+                    self._delNode(pivot, pivot.left, _direction)
+
+            if pivot.right != None:
+                if pivot.right.data == data:
+                    _findR = True
+                    _direction = "R"
+                    print(f"Find child, Father >>{pivot.data}")
+                    self._delNode(pivot, pivot.right, _direction)
+
+            if not _findL and not _findR:
+                if pivot.data < data:
+                    self._delNodeByData(pivot.right, data)
+                else:
+                    self._delNodeByData(pivot.left, data)
+    def _delNode(self, father, del_node, direction):
+        print(f"Nodo padre: {father.data}")
+        print(f"Nodo a eliminar: {del_node.data}")
+        print(f"El nodo a eliminar está en: {direction}")
+
+        # Case 1
+        if self.isTheNodeALeaf(del_node):
+            if direction == "R":
+                father.right = None
+            else:
+                father.left = None
+        # Case 2
+        elif self.countOnlyChildrensOfNode(del_node) == 1:
+            if direction == "R":
+                if del_node.right != None:
+                    father.right = del_node.right
+                else:
+                    father.right = del_node.left
+            else:
+                if del_node.right != None:
+                    father.left = del_node.right
+                else:
+                    father.left = del_node.left
+        # Case 3
+        elif self.countOnlyChildrensOfNode(del_node) == 2:
+            pass
+    
     
     def viewInOrder(self):
         self._viewInOrder(self.root)
@@ -99,6 +161,21 @@ class Tree:
             return 0
         else:
             return 1 + max(self._getHeight(pivot.left), self._getHeight(pivot.right))
+        
+
+    def isTheNodeALeaf(self, node):
+        if node != None:
+            if node.left is None and node.right is None:
+                return True
+
+        return False
+    
+
+    def countOnlyChildrensOfNode(self, node):
+        L = 1 if node.left != None else 0
+        R = 1 if node.right != None else 0
+
+        return L + R
 
 
     def count(self):
