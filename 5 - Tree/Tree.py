@@ -66,6 +66,15 @@ class Tree:
                     return self._searchByData(pivot.left, data)
 
         return None
+    
+
+    def getHeight(self):
+        return self._getHeight(self.root)
+    def _getHeight(self, pivot):
+        if pivot is None:
+            return 0
+        else:
+            return 1 + max(self._getHeight(pivot.left), self._getHeight(pivot.right))
 
 
     def count(self):

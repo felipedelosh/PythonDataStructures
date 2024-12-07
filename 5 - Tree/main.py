@@ -14,6 +14,7 @@ tree.insert(7)
 tree.insert(6)
 
 print(f"TOTAL nodes: {tree.count()}")
+print(f"Tree height: {tree.getHeight()}")
 print(f"Search by data: 1 {tree.searchByData(1)}")
 print(f"Search by data: 777 {tree.searchByData(777)}")
 print("======== VIEW IN-ORDER =========")
