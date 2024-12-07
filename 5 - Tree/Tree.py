@@ -68,6 +68,18 @@ class Tree:
         return None
     
 
+    def getMaxValue(self):
+        if self.root is None:
+            return None
+        
+        return self._getMaxValue(self.root)
+    def _getMaxValue(self, pivot):
+        if pivot.right == None:
+            return pivot.data
+        else:
+            return self._getMaxValue(pivot.right)
+        
+
     def getHeight(self):
         return self._getHeight(self.root)
     def _getHeight(self, pivot):
