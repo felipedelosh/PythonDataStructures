@@ -80,6 +80,18 @@ class Tree:
             return self._getMaxValue(pivot.right)
         
 
+    def getMinValue(self):
+        if self.root is None:
+            return None
+
+        return self._getMinValue(self.root)
+    def _getMinValue(self, pivot):
+        if pivot.left == None:
+            return pivot.data
+        else:
+            return self._getMinValue(pivot.left)
+        
+
     def getHeight(self):
         return self._getHeight(self.root)
     def _getHeight(self, pivot):
