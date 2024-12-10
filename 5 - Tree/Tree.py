@@ -27,66 +27,35 @@ class Tree:
 
 
     def delNodeByData(self, data):
-        # Case 0 del a root
+        if self.root is None:
+            return
         if self.root.data == data:
-            if self.isTheNodeALeaf(self.root):
-                self.root = None
-            else:
-                pass
+            self.root = self._del_node(self.root)
         else:
-            self._delNodeByData(self.root, data)
-    def _delNodeByData(self, pivot, data):
-        if pivot != None:
-            _findL = False
-            _findR = False
-            _direction = ""
+            self._del_node_by_data(self.root, data)
+    def _del_node_by_data(self, node, data):
+        if node is None:
+            return None
+        if data < node.data:
+            node.left = self._del_node_by_data(node.left, data)
+        elif data > node.data:
+            node.right = self._del_node_by_data(node.right, data)
+        else:
+            node = self._del_node(node)
+        return node
+    def _del_node(self, node):
+        if self.isTheNodeALeaf(node):
+            return None
+        if node.left is None:
+            return node.right
+        if node.right is None:
+            return node.left
+        
+        min_right_value = self.get_min_value(node.right)
+        node.data = min_right_value
+        node.right = self._del_node_by_data(node.right, min_right_value)
+        return node
 
-            if pivot.left != None:
-                if pivot.left.data == data:
-                    _findL = True
-                    _direction = "L"
-                    print(f"Find child, Father >>{pivot.data}")
-                    self._delNode(pivot, pivot.left, _direction)
-
-            if pivot.right != None:
-                if pivot.right.data == data:
-                    _findR = True
-                    _direction = "R"
-                    print(f"Find child, Father >>{pivot.data}")
-                    self._delNode(pivot, pivot.right, _direction)
-
-            if not _findL and not _findR:
-                if pivot.data < data:
-                    self._delNodeByData(pivot.right, data)
-                else:
-                    self._delNodeByData(pivot.left, data)
-    def _delNode(self, father, del_node, direction):
-        print(f"Nodo padre: {father.data}")
-        print(f"Nodo a eliminar: {del_node.data}")
-        print(f"El nodo a eliminar está en: {direction}")
-
-        # Case 1
-        if self.isTheNodeALeaf(del_node):
-            if direction == "R":
-                father.right = None
-            else:
-                father.left = None
-        # Case 2
-        elif self.countOnlyChildrensOfNode(del_node) == 1:
-            if direction == "R":
-                if del_node.right != None:
-                    father.right = del_node.right
-                else:
-                    father.right = del_node.left
-            else:
-                if del_node.right != None:
-                    father.left = del_node.right
-                else:
-                    father.left = del_node.left
-        # Case 3
-        elif self.countOnlyChildrensOfNode(del_node) == 2:
-            pass
-    
     
     def viewInOrder(self):
         self._viewInOrder(self.root)
@@ -140,7 +109,13 @@ class Tree:
             return pivot.data
         else:
             return self._getMaxValue(pivot.right)
-        
+    
+
+    def get_min_value(self, node):
+        while node.left is not None:
+            node = node.left
+        return node.data
+
 
     def getMinValue(self):
         if self.root is None:
