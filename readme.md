@@ -18,7 +18,7 @@ In this repository, you'll find a comprehensive collection of fundamental and ad
 - `Function 4.1`: Queue<br>
 - `Function 4.2`: Stack<br>
 - `Function 6`: Binary Tree<br>
-- `Function 7`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
+- `Function 7`: N-Ary Tree<br>
 - `Function 8`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 
 
