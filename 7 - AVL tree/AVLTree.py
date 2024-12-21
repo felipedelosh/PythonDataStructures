@@ -11,15 +11,22 @@ class AVLTree:
     def addData(self, data):
         self.root = self._addData(self.root, data)
     def _addData(self, pivot, data):
+        print(f"Entra a guardar: {data} >> PIVOT: {pivot}")
         if pivot == None:
-            return Node(data)
+            new_node = Node(data)
+            print(f"Se a creado el nodo:{new_node}>>{new_node.data}")
+            return new_node
         if pivot.data < data:
             pivot.right = self._addData(pivot.right, data)
         else:
             pivot.left = self._addData(pivot.left, data)
+        
+        print(f"continua el {pivot.data} su der: {pivot.right} su izq: {pivot.left}")
 
         pivot.height = 1 + max(self.getNodeHeight(pivot.left), self.getNodeHeight(pivot.right))
+        print(f"Para el NODO: {pivot.data}, su altura es:{pivot.height}")
         f_equilibrium = self.getNodeEquilibrium(pivot)
+        print(f"para el nodo {pivot} su equilibrio es: {f_equilibrium}")
 
         if f_equilibrium > 1:
             if data < pivot.left.data:
@@ -35,6 +42,9 @@ class AVLTree:
                 pivot.right = self.RR(pivot.right)
                 return self.RL(pivot)
 
+        print(f"FINAL:{pivot}  >> {pivot.data}")
+        print(f"DER: {pivot.right}")
+        print(f"IZQ: {pivot.left}")
         return pivot
 
 
