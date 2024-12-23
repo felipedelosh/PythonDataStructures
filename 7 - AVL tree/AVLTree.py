@@ -72,6 +72,7 @@ class AVLTree:
         node.height = 1 + max(self.getNodeHeight(node.left), self.getNodeHeight(node.right))
         print(node.height)
         y.height = 1 + max(self.getNodeHeight(y.left), self.getNodeHeight(y.right))
+        print(y.height)
         return y
 
 
