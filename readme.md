@@ -12,14 +12,15 @@ In this repository, you'll find a comprehensive collection of fundamental and ad
 
 ## :hammer:Funtions:
 
-- `Function 1`: Singly Linked List<br>
-- `Function 2`: Doubly Linked List<br>
-- `Function 3`: Circular Linked List<br>
-- `Function 4.1`: Queue<br>
-- `Function 4.2`: Stack<br>
-- `Function 6`: Binary Tree<br>
-- `Function 7`: N-Ary Tree<br>
-- `Function 8`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
+- `Data Structure 1`: Singly Linked List<br>
+- `Data Structure 2`: Doubly Linked List<br>
+- `Data Structure 3`: Circular Linked List<br>
+- `Data Structure 4.1`: Queue<br>
+- `Data Structure 4.2`: Stack<br>
+- `Data Structure 6`: Binary Tree<br>
+- `Data Structure 7`: N-Ary Tree<br>
+- `Data Structure 8`: AVL Tree<br>
+- `Data Structure 9`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 
 
 ## :play_or_pause_button:How to execute a project
