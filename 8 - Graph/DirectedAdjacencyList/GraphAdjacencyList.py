@@ -18,3 +18,15 @@ class Graph:
             if A not in self.edges:
                 self.edges[A] = []
             self.edges[A].append(B)
+
+
+    def deleteNode(self, x):
+        if x in self.nodes:
+            self.nodes.remove(x)
+
+            if x in self.edges:
+                del self.edges[x]
+
+            for u, v in self.edges.items():
+                if x in v:
+                    v.remove(x)
