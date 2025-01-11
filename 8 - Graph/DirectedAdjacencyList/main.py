@@ -26,5 +26,6 @@ g.addEdge("G", "F")
 g.addEdge("D", "F")
 
 
-
-print(g.edges)
+print("=============GRAPH STATICTIS===============")
+print(f"All nodes: {g.nodes}")
+print(f"All Edges: {g.edges}")
