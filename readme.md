@@ -17,10 +17,10 @@ In this repository, you'll find a comprehensive collection of fundamental and ad
 - `Data Structure 3`: Circular Linked List<br>
 - `Data Structure 4.1`: Queue<br>
 - `Data Structure 4.2`: Stack<br>
-- `Data Structure 6`: Binary Tree<br>
-- `Data Structure 7`: N-Ary Tree<br>
-- `Data Structure 8`: AVL Tree<br>
-- `Data Structure 9`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
+- `Data Structure 5`: Binary Tree<br>
+- `Data Structure 6`: N-Ary Tree<br>
+- `Data Structure 7`: AVL Tree<br>
+- `Data Structure 8`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 
 
 ## :play_or_pause_button:How to execute a project
