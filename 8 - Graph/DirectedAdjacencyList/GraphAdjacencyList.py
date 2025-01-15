@@ -35,6 +35,19 @@ class Graph:
     def DFS(self, initial_node):
         visited_nodes = []
 
+        if initial_node in self.nodes:
+            queue = [initial_node]
+
+            while queue:
+                _pivot = queue.pop()
+
+                if _pivot not in visited_nodes:
+                    visited_nodes.append(_pivot)                
+
+                    if _pivot in self.edges:
+                        for i in reversed(self.edges[_pivot]):
+                            if i not in queue and i not in visited_nodes:
+                                queue.append(i)
 
         return visited_nodes
 
