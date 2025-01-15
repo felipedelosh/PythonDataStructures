@@ -3,7 +3,6 @@ FelipedelosH
 """
 from GraphAdjacencyListWeight import Graph
 
-
 g = Graph()
 
 # ADD nodes
@@ -21,8 +20,17 @@ g.addNode("I")
 g.addEdge("A", "B", 6)
 g.addEdge("A", "D", 10)
 g.addEdge("A", "G", 8)
-g.addEdge("B", "D", 10)
-
+g.addEdge("B", "E", 15)
+g.addEdge("B", "H", 13)
+g.addEdge("B", "C", 11)
+g.addEdge("C", "H", 4)
+g.addEdge("D", "E", 6)
+g.addEdge("E", "F", 2)
+g.addEdge("F", "G", 4)
+g.addEdge("F", "I", 6)
+g.addEdge("G", "H", 5)
+g.addEdge("G", "I", 5)
+g.addEdge("H", "I", 7)
 
 
 print("=============GRAPH STATICTIS===============")
