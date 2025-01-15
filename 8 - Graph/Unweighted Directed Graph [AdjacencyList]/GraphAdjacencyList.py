@@ -36,18 +36,18 @@ class Graph:
         visited_nodes = []
 
         if initial_node in self.nodes:
-            queue = [initial_node]
+            stack = [initial_node]
 
-            while queue:
-                _pivot = queue.pop()
+            while stack:
+                _pivot = stack.pop()
 
                 if _pivot not in visited_nodes:
                     visited_nodes.append(_pivot)                
 
                     if _pivot in self.edges:
                         for i in reversed(self.edges[_pivot]):
-                            if i not in queue and i not in visited_nodes:
-                                queue.append(i)
+                            if i not in stack and i not in visited_nodes:
+                                stack.append(i)
 
         return visited_nodes
 
@@ -56,16 +56,16 @@ class Graph:
         visited_nodes = []
 
         if initial_node in self.nodes:
-            stack = [initial_node]
+            queue = [initial_node]
             
-            while stack:
-                _pivot = stack.pop(0)
+            while queue:
+                _pivot = queue.pop(0)
                 visited_nodes.append(_pivot)
                 
                 if _pivot in self.edges:
                     for i in self.edges[_pivot]:
-                        if i not in stack and i not in visited_nodes:
-                            stack.append(i)
+                        if i not in queue and i not in visited_nodes:
+                            queue.append(i)
 
 
         return visited_nodes
