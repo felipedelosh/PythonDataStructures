@@ -32,8 +32,11 @@ class Graph:
                     v.remove(x)
 
 
-    def BFS(self, initial_node):
-        pass
+    def DFS(self, initial_node):
+        visited_nodes = []
+
+
+        return visited_nodes
 
 
     def BFS(self, initial_node):
