@@ -22,3 +22,16 @@ class Graph:
 
             self.edges[A].append((B, W))
             self.edges[B].append((A, W))
+
+
+    def deleteNode(self, x):
+        if x in self.nodes:
+            self.nodes.remove(x)
+
+            if x in self.edges:
+                del self.edges[x]
+
+            for u, v in self.edges.items():
+                for k in v:
+                    if k[0] == x:
+                        v.remove(k)

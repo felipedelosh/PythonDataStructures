@@ -32,6 +32,12 @@ g.addEdge("G", "H", 5)
 g.addEdge("G", "I", 5)
 g.addEdge("H", "I", 7)
 
+# Test delete
+g.addNode("X")
+g.addEdge("A", "X", 1)
+g.addEdge("X", "B", 2)
+g.addEdge("X", "X", 3)
+g.deleteNode("X")
 
 print("=============GRAPH STATICTIS===============")
 print(f"All nodes: {g.nodes}")
