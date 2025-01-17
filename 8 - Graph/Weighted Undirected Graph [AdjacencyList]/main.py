@@ -42,4 +42,5 @@ g.deleteNode("X")
 print("=============GRAPH STATICTIS===============")
 print(f"All nodes: {g.nodes}")
 print(f"All Edges: {g.edges}")
-
+print(f"DFS: {g.DFS("A")}")
+print(f"BFS: {g.BFS("A")}")
