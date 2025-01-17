@@ -62,6 +62,12 @@ class Graph:
                 return True
             
         return False
+    
+
+    def _getNeighborWeight(self, nodeA, nodeB):
+        for i in self.edges[nodeA]:
+            if i[0] == nodeB:
+                return i[1]
 
 
     def DFS(self, initial_node):
@@ -108,6 +114,60 @@ class Graph:
         Enter a graph start point a return a table with all steps of Dijkstra table.
         """
         dijkstra_table = []
+        visited_nodes = []
+        _total_steps = len(self.nodes)
+
+        def markMinDefinitiveCandidate(table_iterator):
+            best_candidate = None
+            weight_of_best_candidate = float('inf')
+
+            # Find the node with less weight
+            for i in dijkstra_table:
+                if i not in visited_nodes and dijkstra_table[i][table_iterator] != float('inf'):
+                    _w = dijkstra_table[i][table_iterator][0]
+                    _n = dijkstra_table[i][table_iterator][1]
+                    
+                    if _w < weight_of_best_candidate:
+                        best_candidate = i
+                        weight_of_best_candidate = _w
+
+            visited_nodes.append(best_candidate)
+
+            range_itter = range(table_iterator+1, len(dijkstra_table[best_candidate]))
+            for i in range_itter:
+                dijkstra_table[best_candidate][i] = '*'
+
+
+        def getNextDefinitiveCandidate(table_iterator):
+            best_candidate = None
+            weight_of_best_candidate = float('inf')
+
+            # Find the node with less weight
+            for i in dijkstra_table:
+                if i not in visited_nodes and dijkstra_table[i][table_iterator] != float('inf'):
+                    _w = dijkstra_table[i][table_iterator][0]
+                    _n = dijkstra_table[i][table_iterator][1]
+                    
+                    if _w < weight_of_best_candidate:
+                        best_candidate = i
+                        weight_of_best_candidate = _w
+
+            print("EPAAA")
+            print(best_candidate)
+            print(weight_of_best_candidate)
+
+
+        def fillNeighborsDistance(table_iterator, node, akumulated_distance):
+            for i in dijkstra_table:
+                if i == node:
+                    continue
+
+                _neighbor = i
+                if self.isNeighbor(node, _neighbor):
+                    dijkstra_table[i][table_iterator] = (self._getNeighborWeight(node, _neighbor) + akumulated_distance, node)
+                else:
+                    dijkstra_table[i][table_iterator] = (float('inf'))
+
 
         if start in self.edges:
             #Step 0: FILL TABLE with empty info
@@ -123,7 +183,9 @@ class Graph:
             # Step 1: The first Node have 0 distance
             dijkstra_table[start][0] = (0, start)
 
-            
+            fillNeighborsDistance(0, start, 0)
+            markMinDefinitiveCandidate(0)
+            data = getNextDefinitiveCandidate(0)
 
 
         return dijkstra_table
