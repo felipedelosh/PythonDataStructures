@@ -41,7 +41,6 @@ g = Graph()
 
 
 # Test Dijktra Graph2
-# https://www.youtube.com/watch?v=fgdCNuGPJnw
 g.addNode("s")
 g.addNode("b")
 g.addNode("d")
@@ -68,4 +67,7 @@ print("=============GRAPH STATICTIS===============")
 
 
 disktra = g.getDijkstraTABULATED("s")
+
+for i in disktra:
+    print(i, disktra[i])
 
