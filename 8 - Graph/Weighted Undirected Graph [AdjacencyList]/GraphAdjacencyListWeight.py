@@ -235,10 +235,45 @@ class Graph:
             self.mostrarDj(dijkstra)
 
 
-            print(f"Paso 5: rellenar los vecinos desde step {2}")
+            print(f"Paso 6: rellenar los vecinos desde step {2}")
             fill_neighbors_distances(2, best_candidate)
             self.mostrarDj(dijkstra)
 
+
+            print(f"paso 7: buscar el mejor candidato step {2}")
+            best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(2)
+            print(f"La menor distancia es: {best_distance} desde el nodo: {best_candidate} ... anteior: {previous_candidate}")
+            akumulated_distance = akumulated_distance + best_distance
+            print(f"Distancia acumulada: {akumulated_distance}")
+            self.mostrarDj(dijkstra)
+
+            print(f"Paso 8: rellenar los vecinos desde step {3}")
+            fill_neighbors_distances(3, best_candidate)
+            self.mostrarDj(dijkstra)
+
+
+            print(f"paso 9: buscar el mejor candidato step {3}")
+            best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(3)
+            print(f"La menor distancia es: {best_distance} desde el nodo: {best_candidate} ... anteior: {previous_candidate}")
+            akumulated_distance = akumulated_distance + best_distance
+            print(f"Distancia acumulada: {akumulated_distance}")
+            self.mostrarDj(dijkstra)
+
+            print(f"Paso 10: rellenar los vecinos desde step {4}")
+            fill_neighbors_distances(4, best_candidate)
+            self.mostrarDj(dijkstra)
+
+
+            print(f"paso 11: buscar el mejor candidato step {4}")
+            best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(4)
+            print(f"La menor distancia es: {best_distance} desde el nodo: {best_candidate} ... anteior: {previous_candidate}")
+            akumulated_distance = akumulated_distance + best_distance
+            print(f"Distancia acumulada: {akumulated_distance}")
+            self.mostrarDj(dijkstra)
+
+            print(f"Paso 12: rellenar los vecinos desde step {5}")
+            fill_neighbors_distances(5, best_candidate)
+            self.mostrarDj(dijkstra)
         
         return dijkstra
     
