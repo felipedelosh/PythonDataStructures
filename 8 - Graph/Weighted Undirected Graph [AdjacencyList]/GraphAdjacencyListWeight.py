@@ -111,83 +111,142 @@ class Graph:
 
     def getDijkstraTABULATED(self, start):
         """
-        Enter a graph start point a return a table with all steps of Dijkstra table.
+        Enter node of graph and return a {table} with minimal distances.
         """
-        dijkstra_table = []
-        visited_nodes = []
-        _total_steps = len(self.nodes)
+        dijkstra = {}
+        total_nodes = len(self.nodes)
+        visited = []
+        akumulated_distance = 0
 
-        def markMinDefinitiveCandidate(table_iterator):
+
+        def _init_dijkstra_table():
+            nonlocal dijkstra
+            dijkstra = {i : [() for i in self.edges] for i in self.edges}
+
+            nonlocal start
+            dijkstra[start][0] = (0, start)
+
+        def select_min_weight_candidate_and_mark_visited(step):
+            """
+            Enter a index of dijkstra table and return 
+            best_distance, best_candidate, previous_candiate
+            """
+            nonlocal dijkstra
+            nonlocal visited
             best_candidate = None
-            weight_of_best_candidate = float('inf')
+            previous_candidate = None # Contains a node of min weight
+            best_distance = float('inf') # to save a min distance 
+            
+            for i in dijkstra:
+                _data = dijkstra[i][step]
 
-            # Find the node with less weight
-            for i in dijkstra_table:
-                if i not in visited_nodes and dijkstra_table[i][table_iterator] != float('inf'):
-                    _w = dijkstra_table[i][table_iterator][0]
-                    _n = dijkstra_table[i][table_iterator][1]
-                    
-                    if _w < weight_of_best_candidate:
-                        best_candidate = i
-                        weight_of_best_candidate = _w
-
-            visited_nodes.append(best_candidate)
-
-            range_itter = range(table_iterator+1, len(dijkstra_table[best_candidate]))
-            for i in range_itter:
-                dijkstra_table[best_candidate][i] = '*'
-
-
-        def getNextDefinitiveCandidate(table_iterator):
-            best_candidate = None
-            weight_of_best_candidate = float('inf')
-
-            # Find the node with less weight
-            for i in dijkstra_table:
-                if i not in visited_nodes and dijkstra_table[i][table_iterator] != float('inf'):
-                    _w = dijkstra_table[i][table_iterator][0]
-                    _n = dijkstra_table[i][table_iterator][1]
-                    
-                    if _w < weight_of_best_candidate:
-                        best_candidate = i
-                        weight_of_best_candidate = _w
-
-            print("EPAAA")
-            print(best_candidate)
-            print(weight_of_best_candidate)
-
-
-        def fillNeighborsDistance(table_iterator, node, akumulated_distance):
-            for i in dijkstra_table:
-                if i == node:
+                if _data == 'X':
                     continue
 
-                _neighbor = i
-                if self.isNeighbor(node, _neighbor):
-                    dijkstra_table[i][table_iterator] = (self._getNeighborWeight(node, _neighbor) + akumulated_distance, node)
+                if i in visited:
+                    continue
+
+                if _data == float('inf'):
+                    continue
+
+                if _data:
+                    distance, node = _data
+                    if distance < best_distance:
+                        best_candidate = i
+                        previous_candidate = node
+                        best_distance = self._getNeighborWeight(i, node)
+
+            # Fill visited
+            visited.append(best_candidate)
+
+
+            # FILL TABULATED VISISTED NODES
+            nonlocal total_nodes
+            try:
+                if step == 0 and best_distance == 0:
+                    range_to_fill = range(step+1, total_nodes)
                 else:
-                    dijkstra_table[i][table_iterator] = (float('inf'))
+                    dijkstra[best_candidate][step + 1] = dijkstra[best_candidate][step]
+                    range_to_fill = range(step+2, total_nodes)
+
+                for i in range_to_fill:
+                    dijkstra[best_candidate][i] = 'X'
+            except:
+                pass
 
 
+                
+            return best_distance, best_candidate, previous_candidate
+        
+
+        def fill_neighbors_distances(step, node):
+            nonlocal dijkstra
+            nonlocal visited
+            nonlocal akumulated_distance
+
+            for i in dijkstra:
+                if not i in visited:
+                    
+                    if self.isNeighbor(node, i):
+                        _distance = self._getNeighborWeight(node, i) + akumulated_distance
+                        dijkstra[i][step] = (_distance, node)
+                    else:
+                        if step > 0:
+                            if dijkstra[i][step-1] != float('inf'):
+                                dijkstra[i][step] = dijkstra[i][step-1]
+                                continue
+                            
+                        dijkstra[i][step] = float('inf')
+
+
+        # Dijkstra LOGIC
         if start in self.edges:
-            #Step 0: FILL TABLE with empty info
-            """
-                {
-                    NODE:[(), () ... ()],
-                    ...,
-                    NODE:[(), () ... ()]
-                }
-            """
-            dijkstra_table = {i : [() for i in self.edges] for i in self.edges}
+            # STEP 0: construct table and start point
 
-            # Step 1: The first Node have 0 distance
-            dijkstra_table[start][0] = (0, start)
+            print("paso 0: construir la tabla")
+            _init_dijkstra_table()
+            self.mostrarDj(dijkstra)
 
-            fillNeighborsDistance(0, start, 0)
-            markMinDefinitiveCandidate(0)
-            data = getNextDefinitiveCandidate(0)
+            print("paso 1: marcar el incio como mejor candidato")
+            best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(0)
+            self.mostrarDj(dijkstra)
+
+            print(f"paso 2: rellenar los vecinos desde step {0}")
+            fill_neighbors_distances(0, best_candidate)
+            self.mostrarDj(dijkstra)
+
+            print(f"paso 3: buscar el mejor candidato step {0}")
+            best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(0)
+            print(f"La menor distancia es: {best_distance} desde el nodo: {best_candidate} ... anteior: {previous_candidate}")
+            akumulated_distance = akumulated_distance + best_distance
+            print(f"Distancia acumulada: {akumulated_distance}")
+            self.mostrarDj(dijkstra)
 
 
-        return dijkstra_table
+            print(f"Paso 4: rellenar los vecinos desde step {1}")
+            fill_neighbors_distances(1, best_candidate)
+            self.mostrarDj(dijkstra)
+
+            print(f"paso 5: buscar el mejor candidato step {1}")
+            best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(1)
+            print(f"La menor distancia es: {best_distance} desde el nodo: {best_candidate} ... anteior: {previous_candidate}")
+            akumulated_distance = akumulated_distance + best_distance
+            print(f"Distancia acumulada: {akumulated_distance}")
+            self.mostrarDj(dijkstra)
+
+
+            print(f"Paso 5: rellenar los vecinos desde step {2}")
+            fill_neighbors_distances(2, best_candidate)
+            self.mostrarDj(dijkstra)
+
+        
+        return dijkstra
+    
+
+    def mostrarDj(self, table):
+        print("????????????????????????")
+        for i in table:
+            print(i, table[i])
+        print("========================")
 
 

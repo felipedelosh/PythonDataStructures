@@ -69,6 +69,3 @@ print("=============GRAPH STATICTIS===============")
 
 disktra = g.getDijkstraTABULATED("s")
 
-print("____________________________")
-for i in disktra:
-    print(i, disktra[i])
