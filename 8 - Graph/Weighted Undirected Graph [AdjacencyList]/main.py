@@ -78,3 +78,4 @@ g2_dj_table = g2.getDijkstraTABULATED("s")
 print("Dijkstra table:")
 for i in g2_dj_table:
     print(i, g2_dj_table[i])
+
