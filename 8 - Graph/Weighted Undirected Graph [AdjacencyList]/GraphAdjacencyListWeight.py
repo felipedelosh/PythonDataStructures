@@ -208,7 +208,9 @@ class Graph:
             for i in range(0, total_nodes):
                 fill_neighbors_distances(i, best_candidate)
                 best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(i)
-                akumulated_distance = akumulated_distance + best_distance
+                # BUG: a veces la distancia acumulada no es simplemete una sucesión A+B+C ... a veces el algorimo brinca al inicio.
+                akumulated_distance = akumulated_distance + best_distance 
+                print(f"Paso {i} distancia acumulada: {akumulated_distance}")
 
 
         return dijkstra
