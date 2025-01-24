@@ -45,7 +45,7 @@ print(f"All Edges: {g.edges}")
 print(f"DFS: {g.DFS("A")}")
 print(f"BFS: {g.BFS("A")}")
 g_dj_table = g.getDijkstraTABULATED("A")
-print("Dijkstra table:")
+print("\nDijkstra table:")
 for i in g_dj_table:
     print(i, g_dj_table[i])
 
@@ -68,14 +68,14 @@ g2.addEdge("d", "t", 6)
 g2.addEdge("d", "e", 2)
 g2.addEdge("e", "t", 2)
 
-
+print("")
 print("=============GRAPH 2 STATICTIS===============")
 print(f"All nodes: {g2.nodes}")
 print(f"All Edges: {g2.edges}")
 print(f"DFS: {g2.DFS("s")}")
 print(f"BFS: {g2.BFS("s")}")
 g2_dj_table = g2.getDijkstraTABULATED("s")
-print("Dijkstra table:")
+print("\nDijkstra table:")
 for i in g2_dj_table:
     print(i, g2_dj_table[i])
 
