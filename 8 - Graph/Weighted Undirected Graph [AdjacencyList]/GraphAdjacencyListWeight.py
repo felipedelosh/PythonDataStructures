@@ -238,9 +238,9 @@ class Graph:
 
             akumulated_distance = 0
             _counter = 0
-            while _pivot != _A: # Search and sum(aku)
+            while _B is not None and _pivot != _A: # Search and sum(aku)
                 if _counter == 10:
-                    print("Error while")
+                    print(".........................Error while...........................")
                     break
                 
                 _weight = _weight + dijkstra_definitive_candidates[_pivot][0]
