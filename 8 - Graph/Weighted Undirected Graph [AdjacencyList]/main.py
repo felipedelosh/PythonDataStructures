@@ -47,14 +47,14 @@ print("=============GRAPH 1 STATICTIS===============")
 g_dj_table = g.getDijkstraTABULATED("A")
 print("\nDijkstra table:")
 for i in g_dj_table:
-    print(i, g_dj_table[i])
+    print(i, g_dj_table[i][3])
 
 # Test Dijktra Graph2
 # g2 = Graph()
 # g2.addNode("s")
 # g2.addNode("b")
-# g2.addNode("d")
 # g2.addNode("c")
+# g2.addNode("d")
 # g2.addNode("e")
 # g2.addNode("t")
 

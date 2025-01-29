@@ -223,6 +223,9 @@ class Graph:
                     if i[0] == _A:
                         continue
 
+                    if not self.isNeighbor(i[0], previous_candidate):
+                        continue
+
                     if i[0] == best_candidate:
                         _AKU = _AKU + i[1]
                         break
@@ -245,11 +248,12 @@ class Graph:
             best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(0)
 
             for i in range(0, total_nodes):
+                print(f"FOR: {i}")
                 fill_neighbors_distances(i, best_candidate)
                 best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(i)
                 # BUG: a veces la distancia acumulada no es simplemete una sucesión A+B+C ... a veces el algorimo brinca al inicio.
                 akumulated_distance = update_akumulated_distance(akumulated_distance, best_distance, best_candidate, previous_candidate)
-                print(f"FOR: {i}")
+                
 
 
         return dijkstra
