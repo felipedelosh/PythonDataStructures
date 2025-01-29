@@ -109,12 +109,22 @@ class Graph:
         return visited_nodes
     
 
+    def getBestRoute(self, origin, destination):
+        dijkstra = self.getDijkstraTABULATED(origin)
+
+        steps = []
+
+        print(dijkstra)
+        pass
+    
+
     def getDijkstraTABULATED(self, start):
         """
         Enter node of graph and return a {table} with minimal distances.
         """
         dijkstra = {}
-        total_nodes = len(self.nodes)
+        dijkstra_definitive_candidates = {} # Save the best steps exampls {"NODOX": (weight, "NODOY")}
+        total_nodes = len(self.nodes) 
         visited = []
         akumulated_distance = 0
         controller_akumulated_distance = [(start,0)]
@@ -134,6 +144,7 @@ class Graph:
             """
             nonlocal dijkstra
             nonlocal visited
+            nonlocal dijkstra_definitive_candidates
             best_candidate = None
             previous_candidate = None # Contains a node of min weight
             best_distance = float('inf') # to save a min distance 
@@ -159,6 +170,7 @@ class Graph:
 
             # Fill visited
             visited.append(best_candidate)
+            dijkstra_definitive_candidates[best_candidate] = (best_distance, previous_candidate)
 
 
             # FILL TABULATED VISISTED NODES
@@ -206,37 +218,41 @@ class Graph:
             print(f"Mejor distancia: {akumulated_distance}")
             print(f"Mejor candidato: {best_candidate}")
             print(f"Anterior candidato: {previous_candidate}")
+
+            nonlocal visited
+            nonlocal dijkstra_definitive_candidates
+            print(f"Devinitives: {dijkstra_definitive_candidates}")
+            print(f"nodos visitados {visited}")
+
+
+            _A = visited[0] # Origin
+            _B = best_candidate # Destination
+            _pivot = dijkstra_definitive_candidates[_B][1]
+            _weight = dijkstra_definitive_candidates[_B][0]
+
+            print(f"Origen: {_A}; Destino: {_B}")
             
-            nonlocal controller_akumulated_distance
-            controller_akumulated_distance.append((best_candidate, best_distance))
+            if _pivot == _A: # is conected directly with origin?
+                print(f"Retorna por caso por defecto PESO: {dijkstra_definitive_candidates[_B][0]}")
+                return dijkstra_definitive_candidates[_B][0]
 
-            _A = controller_akumulated_distance[-2][0]
-            _B = controller_akumulated_distance[-1][0]
-            print(f"Candidatos a evaluar {_A}, {_B}")
-            if self.isNeighbor(_A, _B):
-                akumulated_distance = akumulated_distance + best_distance
-            else:
-                print(f"{_A} y {_B} no son vecinos")
+            akumulated_distance = 0
+            _counter = 0
+            while _pivot != _A: # Search and sum(aku)
+                if _counter == 10:
+                    print("Error while")
+                    break
+                
+                _weight = _weight + dijkstra_definitive_candidates[_pivot][0]
+                akumulated_distance = akumulated_distance + _weight
+                _pivot = dijkstra_definitive_candidates[_pivot][1]
+                _counter = _counter + 1
 
-                _AKU = 0
-                for i in controller_akumulated_distance:
-                    if i[0] == _A:
-                        continue
-
-                    if not self.isNeighbor(i[0], previous_candidate):
-                        continue
-
-                    if i[0] == best_candidate:
-                        _AKU = _AKU + i[1]
-                        break
-                    
-                    _AKU = _AKU + + i[1]
-
-                akumulated_distance = _AKU
                 
             print(f"UPDATE: Distancia acumulada: {akumulated_distance}")
             print(f"ARR aku: {controller_akumulated_distance}")
             print("**************")
+
 
             return akumulated_distance
 
@@ -248,13 +264,15 @@ class Graph:
             best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(0)
 
             for i in range(0, total_nodes):
-                print(f"FOR: {i}")
+                print(i)
                 fill_neighbors_distances(i, best_candidate)
                 best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(i)
                 # BUG: a veces la distancia acumulada no es simplemete una sucesión A+B+C ... a veces el algorimo brinca al inicio.
                 akumulated_distance = update_akumulated_distance(akumulated_distance, best_distance, best_candidate, previous_candidate)
                 
 
+        print("=====================")
+        print(dijkstra_definitive_candidates)
 
         return dijkstra
     
