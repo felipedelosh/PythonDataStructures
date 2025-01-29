@@ -117,11 +117,12 @@ class Graph:
         total_nodes = len(self.nodes)
         visited = []
         akumulated_distance = 0
+        controller_akumulated_distance = [(start,0)]
 
 
         def _init_dijkstra_table():
             nonlocal dijkstra
-            dijkstra = {i : [() for i in self.edges] for i in self.edges}
+            dijkstra = {i : [() for i in self.nodes] for i in self.nodes}
 
             nonlocal start
             dijkstra[start][0] = (0, start)
@@ -163,6 +164,7 @@ class Graph:
             # FILL TABULATED VISISTED NODES
             nonlocal total_nodes
             try:
+                # BUG: in step 0 pass to next step
                 if step == 0 and best_distance == 0:
                     range_to_fill = range(step+1, total_nodes)
                 else:
@@ -199,6 +201,43 @@ class Graph:
                         dijkstra[i][step] = float('inf')
 
 
+        def update_akumulated_distance(akumulated_distance, best_distance, best_candidate, previous_candidate):
+            print(f"Distancia acumulada actual: {akumulated_distance}")
+            print(f"Mejor distancia: {akumulated_distance}")
+            print(f"Mejor candidato: {best_candidate}")
+            print(f"Anterior candidato: {previous_candidate}")
+            
+            nonlocal controller_akumulated_distance
+            controller_akumulated_distance.append((best_candidate, best_distance))
+
+            _A = controller_akumulated_distance[-2][0]
+            _B = controller_akumulated_distance[-1][0]
+            print(f"Candidatos a evaluar {_A}, {_B}")
+            if self.isNeighbor(_A, _B):
+                akumulated_distance = akumulated_distance + best_distance
+            else:
+                print(f"{_A} y {_B} no son vecinos")
+
+                _AKU = 0
+                for i in controller_akumulated_distance:
+                    if i[0] == _A:
+                        continue
+
+                    if i[0] == best_candidate:
+                        _AKU = _AKU + i[1]
+                        break
+                    
+                    _AKU = _AKU + + i[1]
+
+                akumulated_distance = _AKU
+                
+            print(f"UPDATE: Distancia acumulada: {akumulated_distance}")
+            print(f"ARR aku: {controller_akumulated_distance}")
+            print("**************")
+
+            return akumulated_distance
+
+
         # Dijkstra LOGIC
         if start in self.edges:
             # STEP 0: construct table and start point
@@ -209,8 +248,8 @@ class Graph:
                 fill_neighbors_distances(i, best_candidate)
                 best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(i)
                 # BUG: a veces la distancia acumulada no es simplemete una sucesión A+B+C ... a veces el algorimo brinca al inicio.
-                akumulated_distance = akumulated_distance + best_distance 
-                print(f"Paso {i} distancia acumulada: {akumulated_distance}")
+                akumulated_distance = update_akumulated_distance(akumulated_distance, best_distance, best_candidate, previous_candidate)
+                print(f"FOR: {i}")
 
 
         return dijkstra
