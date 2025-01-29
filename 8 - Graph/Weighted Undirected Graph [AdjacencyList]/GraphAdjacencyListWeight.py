@@ -233,8 +233,8 @@ class Graph:
             print(f"Origen: {_A}; Destino: {_B}")
             
             if _pivot == _A: # is conected directly with origin?
-                print(f"Retorna por caso por defecto PESO: {dijkstra_definitive_candidates[_B][0]}")
-                return dijkstra_definitive_candidates[_B][0]
+                print(f"Retorna por caso por defecto PESO: {_weight}")
+                return _weight
 
             akumulated_distance = 0
             _counter = 0
