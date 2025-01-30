@@ -203,92 +203,29 @@ class Graph:
             nonlocal visited
             nonlocal akumulated_distance
 
-            print(f"RELLENANDO LA TABLA EN PASO {step}")
-            print(f"Nodo entrante: {node}")
-
             for i in dijkstra:
                 if not i in visited:
-
-                    if step > 0:
-                        print(f"Paso {step}: Estoy en {node} voy a analizar {i}")
-
-
                     if self.isNeighbor(node, i):
                         _distance = self._getNeighborWeight(node, i) + akumulated_distance
 
                         if step > 0:
-                            print(f"Esoy en el paso: {step} // {node}:{i} >> VECINOS")
-                            print(f"Anterior: {dijkstra[i][step-1]}")
-                            print(f"Siguiente: {(_distance, node)}")
-
+                            # The previous step is min weight
                             if dijkstra[i][step-1] != float('inf'):
-                                print(f"Analizando {dijkstra[i][step-1][0]} contra {_distance}")
-                                if dijkstra[i][step-1][0] < _distance:
-                                    pass
-                                    #continue
+                                if dijkstra[i][step-1][0] <= _distance:
+                                    dijkstra[i][step] = dijkstra[i][step-1]
+                                    continue
                             
 
                         dijkstra[i][step] = (_distance, node)
-                        print(f"Rellenando {step} {i}:{(_distance, node)} // ANTERIOR NO ES MENOR SON VECINOS")
                     else:
                         if step > 0: 
                             # Compare if previuos node is infinite
                             if dijkstra[i][step-1] != float('inf'):
-                                
-                                print("Estoy en no son vecinos")
                                 dijkstra[i][step] = dijkstra[i][step-1]
-                                print(f"Rellenando {step} {i}:{dijkstra[i][step-1]} // NO SON VECINOS")
                                 continue
 
 
                         dijkstra[i][step] = float('inf')
-                        print(f"Rellenando {step} {i}:{float('inf')} // NO HAY CONEXION")
-
-
-        def update_akumulated_distance(akumulated_distance, best_distance, best_candidate, previous_candidate):
-            # print(f"Distancia acumulada actual: {akumulated_distance}")
-            # print(f"Mejor distancia: {akumulated_distance}")
-            # print(f"Mejor candidato: {best_candidate}")
-            # print(f"Anterior candidato: {previous_candidate}")
-
-            nonlocal visited
-            nonlocal dijkstra_definitive_candidates
-            # print(f"Devinitives: {dijkstra_definitive_candidates}")
-            # print(f"nodos visitados {visited}")
-
-
-            _A = visited[0] # Origin
-            _B = best_candidate # Destination
-            _pivot = dijkstra_definitive_candidates[_B][1]
-            _weight = dijkstra_definitive_candidates[_B][0]
-
-            # print(f"Origen: {_A}; Destino: {_B}")
-            
-            if _pivot == _A: # is conected directly with origin?
-                # print(f"Retorna por caso por defecto PESO: {_weight}")
-                return _weight
-
-            akumulated_distance = 0
-            _counter = 0
-            while _B is not None and _pivot != _A: # Search and sum(aku)
-                if _counter == 10:
-                    # print(".........................Error while...........................")
-                    break
-
-
-                # print(f"Estoy paradado en: {_pivot}: AKU: {_weight} // Voy para: {dijkstra_definitive_candidates[_pivot][1]}")
-                _weight = _weight + dijkstra_definitive_candidates[_pivot][0]
-                akumulated_distance = akumulated_distance + _weight
-                _pivot = dijkstra_definitive_candidates[_pivot][1]
-                _counter = _counter + 1
-
-                
-            # print(f"UPDATE: Distancia acumulada: {akumulated_distance}")
-            # print(f"ARR aku: {controller_akumulated_distance}")
-            # print("**************")
-
-
-            return akumulated_distance
 
 
         # Dijkstra LOGIC
@@ -298,16 +235,9 @@ class Graph:
             best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(0)
 
             for i in range(0, total_nodes):
-                print(i)
                 fill_neighbors_distances(i, best_candidate)
                 best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(i)
-                print(f"Mejor candidato: {best_candidate}")
-                # BUG: a veces la distancia acumulada no es simplemete una sucesión A+B+C ... a veces el algorimo brinca al inicio.
-                akumulated_distance = update_akumulated_distance(akumulated_distance, best_distance, best_candidate, previous_candidate)
-                
-
-        print("=====================")
-        print(dijkstra_definitive_candidates)
+                akumulated_distance = dijkstra_definitive_candidates[best_candidate][0]
 
         return dijkstra
     
