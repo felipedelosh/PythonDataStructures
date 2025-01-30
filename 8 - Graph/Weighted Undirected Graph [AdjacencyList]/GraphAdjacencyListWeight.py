@@ -116,11 +116,23 @@ class Graph:
 
         print(dijkstra)
         pass
-    
 
-    def getDijkstraTABULATED(self, start):
+    def getDijkstraTable(self, start):
+        _dijkstra_table_info = []
+
+        if start in self.edges:
+            _dijkstra_table_info = self._makeDijkstraAlgVersionTabulated(start)[0]
+
+
+        return _dijkstra_table_info
+
+
+
+
+
+    def _makeDijkstraAlgVersionTabulated(self, start):
         """
-        Enter node of graph and return a {table} with minimal distances.
+        Enter node of graph and return [DijkstraTable, SortesPath]
         """
         dijkstra = {}
         dijkstra_definitive_candidates = {} # Save the best steps exampls {"NODOX": (weight, "NODOY")}
@@ -237,5 +249,4 @@ class Graph:
                 best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(i)
                 akumulated_distance = dijkstra_definitive_candidates[best_candidate][0]
 
-        return dijkstra
-    
+        return [dijkstra, dijkstra_definitive_candidates] 
