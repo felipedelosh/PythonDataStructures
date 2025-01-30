@@ -149,8 +149,11 @@ class Graph:
             previous_candidate = None # Contains a node of min weight
             best_distance = float('inf') # to save a min distance 
             
+            print(f"Step:{step}")
             for i in dijkstra:
                 _data = dijkstra[i][step]
+
+                print(_data)
 
                 if _data == 'X':
                     continue
@@ -163,20 +166,20 @@ class Graph:
 
                 if _data:
                     distance, node = _data
+
                     if distance < best_distance:
                         best_candidate = i
                         previous_candidate = node
-
-                        if step == 0: # The first time distance is zero
-                            best_distance = 0
-                        else:
-                            best_distance = self._getNeighborWeight(i, node)
+                        best_distance = self._getNeighborWeight(i, node)
 
 
             # Fill visited
             visited.append(best_candidate)
-            dijkstra_definitive_candidates[best_candidate] = (best_distance, previous_candidate)
 
+            if not best_distance:
+                dijkstra_definitive_candidates[best_candidate] = (0, previous_candidate)
+            else:
+                dijkstra_definitive_candidates[best_candidate] = (best_distance, previous_candidate)
 
             # FILL TABULATED VISISTED NODES
             nonlocal total_nodes
@@ -219,15 +222,15 @@ class Graph:
 
 
         def update_akumulated_distance(akumulated_distance, best_distance, best_candidate, previous_candidate):
-            print(f"Distancia acumulada actual: {akumulated_distance}")
-            print(f"Mejor distancia: {akumulated_distance}")
-            print(f"Mejor candidato: {best_candidate}")
-            print(f"Anterior candidato: {previous_candidate}")
+            # print(f"Distancia acumulada actual: {akumulated_distance}")
+            # print(f"Mejor distancia: {akumulated_distance}")
+            # print(f"Mejor candidato: {best_candidate}")
+            # print(f"Anterior candidato: {previous_candidate}")
 
             nonlocal visited
             nonlocal dijkstra_definitive_candidates
-            print(f"Devinitives: {dijkstra_definitive_candidates}")
-            print(f"nodos visitados {visited}")
+            # print(f"Devinitives: {dijkstra_definitive_candidates}")
+            # print(f"nodos visitados {visited}")
 
 
             _A = visited[0] # Origin
@@ -235,30 +238,30 @@ class Graph:
             _pivot = dijkstra_definitive_candidates[_B][1]
             _weight = dijkstra_definitive_candidates[_B][0]
 
-            print(f"Origen: {_A}; Destino: {_B}")
+            # print(f"Origen: {_A}; Destino: {_B}")
             
             if _pivot == _A: # is conected directly with origin?
-                print(f"Retorna por caso por defecto PESO: {_weight}")
+                # print(f"Retorna por caso por defecto PESO: {_weight}")
                 return _weight
 
             akumulated_distance = 0
             _counter = 0
             while _B is not None and _pivot != _A: # Search and sum(aku)
                 if _counter == 10:
-                    print(".........................Error while...........................")
+                    # print(".........................Error while...........................")
                     break
 
 
-                print(f"Estoy paradado en: {_pivot}: AKU: {_weight} // Voy para: {dijkstra_definitive_candidates[_pivot][1]}")
+                # print(f"Estoy paradado en: {_pivot}: AKU: {_weight} // Voy para: {dijkstra_definitive_candidates[_pivot][1]}")
                 _weight = _weight + dijkstra_definitive_candidates[_pivot][0]
                 akumulated_distance = akumulated_distance + _weight
                 _pivot = dijkstra_definitive_candidates[_pivot][1]
                 _counter = _counter + 1
 
                 
-            print(f"UPDATE: Distancia acumulada: {akumulated_distance}")
-            print(f"ARR aku: {controller_akumulated_distance}")
-            print("**************")
+            # print(f"UPDATE: Distancia acumulada: {akumulated_distance}")
+            # print(f"ARR aku: {controller_akumulated_distance}")
+            # print("**************")
 
 
             return akumulated_distance
