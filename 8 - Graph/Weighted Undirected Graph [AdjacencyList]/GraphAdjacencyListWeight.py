@@ -110,12 +110,30 @@ class Graph:
     
 
     def getBestRoute(self, origin, destination):
-        dijkstra = self.getDijkstraTABULATED(origin)
+        _dijkstra_steps_info = []
 
-        steps = []
+        if origin != destination and origin in self.nodes and destination in self.nodes:
+            _dijkstra_definitive_candidates = self._makeDijkstraAlgVersionTabulated(origin)[1]
 
-        print(dijkstra)
-        pass
+            if origin in _dijkstra_definitive_candidates and destination in _dijkstra_definitive_candidates:
+                _dijkstra_steps_info = [destination] # Put Destination in route
+
+                _pivot = _dijkstra_definitive_candidates[destination][1] # First Step
+                _dijkstra_steps_info.append(_pivot)
+
+                _counter = 0 # Controller infinite loop
+                while _pivot != origin:
+                    if _counter >= len(_dijkstra_definitive_candidates):
+                        return []
+
+                    _pivot = _dijkstra_definitive_candidates[_pivot][1]
+                    _dijkstra_steps_info.append(_pivot)
+
+                    _counter = _counter + 1
+
+
+        return _dijkstra_steps_info[::-1] # Reversed
+
 
     def getDijkstraTable(self, start):
         _dijkstra_table_info = []
@@ -125,10 +143,7 @@ class Graph:
 
 
         return _dijkstra_table_info
-
-
-
-
+    
 
     def _makeDijkstraAlgVersionTabulated(self, start):
         """
