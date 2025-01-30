@@ -164,13 +164,7 @@ class Graph:
                 if _data:
                     distance, node = _data
 
-                    if step == 3:
-                        print("=============================================")
-                        print(f"Analizando: {_data} contra: {best_distance}")
-
                     if distance < best_distance:
-                        if step == 3:
-                            print(f"Entra: {_data} : {distance} < {best_distance}")
                         best_candidate = i
                         previous_candidate = node
                         best_distance = distance
@@ -178,8 +172,6 @@ class Graph:
 
             # Fill visited
             visited.append(best_candidate)
-            if step == 3:
-                print(f"PASO 3: El menor candidato es: {best_candidate}")
 
             if not best_distance:
                 dijkstra_definitive_candidates[best_candidate] = (0, previous_candidate)
@@ -231,13 +223,9 @@ class Graph:
 
                             if dijkstra[i][step-1] != float('inf'):
                                 print(f"Analizando {dijkstra[i][step-1][0]} contra {_distance}")
-                                if dijkstra[i][step-1][0] > _distance:
-                                    print(f"En los vecinos: {node}:{i} se cumple distancia anterior menor")
-                                    print(f"Anetior: {dijkstra[i][step-1]}")
-                                    print(f"Actual candidato: {(_distance, node)}")
-                                    dijkstra[i][step] = (_distance, node)
-                                    print(f"Rellenando {step} {i}:{(_distance, node)} // ANTERIOR DISTANCIA MENOR DE VECINOS")
-                                    continue
+                                if dijkstra[i][step-1][0] < _distance:
+                                    pass
+                                    #continue
                             
 
                         dijkstra[i][step] = (_distance, node)
