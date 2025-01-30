@@ -127,8 +127,6 @@ class Graph:
         total_nodes = len(self.nodes) 
         visited = []
         akumulated_distance = 0
-        controller_akumulated_distance = [(start,0)]
-
 
         def _init_dijkstra_table():
             nonlocal dijkstra
