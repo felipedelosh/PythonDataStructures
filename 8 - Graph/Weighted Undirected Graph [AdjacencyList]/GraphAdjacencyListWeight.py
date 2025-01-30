@@ -166,7 +166,12 @@ class Graph:
                     if distance < best_distance:
                         best_candidate = i
                         previous_candidate = node
-                        best_distance = self._getNeighborWeight(i, node)
+
+                        if step == 0: # The first time distance is zero
+                            best_distance = 0
+                        else:
+                            best_distance = self._getNeighborWeight(i, node)
+
 
             # Fill visited
             visited.append(best_candidate)
@@ -242,7 +247,9 @@ class Graph:
                 if _counter == 10:
                     print(".........................Error while...........................")
                     break
-                
+
+
+                print(f"Estoy paradado en: {_pivot}: AKU: {_weight} // Voy para: {dijkstra_definitive_candidates[_pivot][1]}")
                 _weight = _weight + dijkstra_definitive_candidates[_pivot][0]
                 akumulated_distance = akumulated_distance + _weight
                 _pivot = dijkstra_definitive_candidates[_pivot][1]
