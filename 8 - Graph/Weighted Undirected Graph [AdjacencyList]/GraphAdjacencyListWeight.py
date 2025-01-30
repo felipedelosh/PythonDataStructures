@@ -149,11 +149,8 @@ class Graph:
             previous_candidate = None # Contains a node of min weight
             best_distance = float('inf') # to save a min distance 
             
-            print(f"Step:{step}")
             for i in dijkstra:
                 _data = dijkstra[i][step]
-
-                print(_data)
 
                 if _data == 'X':
                     continue
@@ -167,14 +164,22 @@ class Graph:
                 if _data:
                     distance, node = _data
 
+                    if step == 3:
+                        print("=============================================")
+                        print(f"Analizando: {_data} contra: {best_distance}")
+
                     if distance < best_distance:
+                        if step == 3:
+                            print(f"Entra: {_data} : {distance} < {best_distance}")
                         best_candidate = i
                         previous_candidate = node
-                        best_distance = self._getNeighborWeight(i, node)
+                        best_distance = distance
 
 
             # Fill visited
             visited.append(best_candidate)
+            if step == 3:
+                print(f"PASO 3: El menor candidato es: {best_candidate}")
 
             if not best_distance:
                 dijkstra_definitive_candidates[best_candidate] = (0, previous_candidate)
@@ -206,19 +211,50 @@ class Graph:
             nonlocal visited
             nonlocal akumulated_distance
 
+            print(f"RELLENANDO LA TABLA EN PASO {step}")
+            print(f"Nodo entrante: {node}")
+
             for i in dijkstra:
                 if not i in visited:
-                    
+
+                    if step > 0:
+                        print(f"Paso {step}: Estoy en {node} voy a analizar {i}")
+
+
                     if self.isNeighbor(node, i):
                         _distance = self._getNeighborWeight(node, i) + akumulated_distance
-                        dijkstra[i][step] = (_distance, node)
-                    else:
+
                         if step > 0:
+                            print(f"Esoy en el paso: {step} // {node}:{i} >> VECINOS")
+                            print(f"Anterior: {dijkstra[i][step-1]}")
+                            print(f"Siguiente: {(_distance, node)}")
+
                             if dijkstra[i][step-1] != float('inf'):
-                                dijkstra[i][step] = dijkstra[i][step-1]
-                                continue
+                                print(f"Analizando {dijkstra[i][step-1][0]} contra {_distance}")
+                                if dijkstra[i][step-1][0] > _distance:
+                                    print(f"En los vecinos: {node}:{i} se cumple distancia anterior menor")
+                                    print(f"Anetior: {dijkstra[i][step-1]}")
+                                    print(f"Actual candidato: {(_distance, node)}")
+                                    dijkstra[i][step] = (_distance, node)
+                                    print(f"Rellenando {step} {i}:{(_distance, node)} // ANTERIOR DISTANCIA MENOR DE VECINOS")
+                                    continue
                             
+
+                        dijkstra[i][step] = (_distance, node)
+                        print(f"Rellenando {step} {i}:{(_distance, node)} // ANTERIOR NO ES MENOR SON VECINOS")
+                    else:
+                        if step > 0: 
+                            # Compare if previuos node is infinite
+                            if dijkstra[i][step-1] != float('inf'):
+                                
+                                print("Estoy en no son vecinos")
+                                dijkstra[i][step] = dijkstra[i][step-1]
+                                print(f"Rellenando {step} {i}:{dijkstra[i][step-1]} // NO SON VECINOS")
+                                continue
+
+
                         dijkstra[i][step] = float('inf')
+                        print(f"Rellenando {step} {i}:{float('inf')} // NO HAY CONEXION")
 
 
         def update_akumulated_distance(akumulated_distance, best_distance, best_candidate, previous_candidate):
@@ -277,6 +313,7 @@ class Graph:
                 print(i)
                 fill_neighbors_distances(i, best_candidate)
                 best_distance, best_candidate, previous_candidate = select_min_weight_candidate_and_mark_visited(i)
+                print(f"Mejor candidato: {best_candidate}")
                 # BUG: a veces la distancia acumulada no es simplemete una sucesión A+B+C ... a veces el algorimo brinca al inicio.
                 akumulated_distance = update_akumulated_distance(akumulated_distance, best_distance, best_candidate, previous_candidate)
                 
