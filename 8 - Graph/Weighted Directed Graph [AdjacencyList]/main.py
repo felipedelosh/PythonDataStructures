@@ -15,7 +15,6 @@ g.addNode("E")
 g.addNode("F")
 
 # Add conections
-
 g.addEdge("A", "B", 3)
 g.addEdge("B", "C", 7)
 g.addEdge("C", "E", 5)
